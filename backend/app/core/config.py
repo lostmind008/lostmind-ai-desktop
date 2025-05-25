@@ -8,7 +8,8 @@ for both development and production deployment.
 import os
 from functools import lru_cache
 from typing import Optional, List
-from pydantic import BaseSettings, validator
+from pydantic import validator
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -31,7 +32,7 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: Optional[str] = None
     
     # Database Configuration
-    DATABASE_URL: str = "sqlite:///./lostmindai.db"
+    DATABASE_URL: str = "sqlite+aiosqlite:///./lostmindai.db"
     VECTOR_DB_PATH: str = "./data/vectors.db"
     
     # Caching Configuration

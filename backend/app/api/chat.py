@@ -10,7 +10,7 @@ import json
 import io
 
 from app.models.chat import (
-    ChatSession, ChatMessage, ChatSessionCreate, ChatMessageCreate,
+    ChatSession, ChatMessage, SessionCreateRequest, ChatRequest,
     ChatResponse, ModelSelection, UsageStats
 )
 from app.services.gemini_service import GeminiService
@@ -21,7 +21,7 @@ router = APIRouter(prefix="/chat", tags=["chat"])
 
 @router.post("/sessions", response_model=ChatSession)
 async def create_session(
-    session_data: ChatSessionCreate,
+    session_data: SessionCreateRequest,
     gemini_service: GeminiService = Depends(get_gemini_service)
 ) -> ChatSession:
     """Create a new chat session with optional model configuration."""
@@ -73,17 +73,17 @@ async def delete_session(
 @router.post("/sessions/{session_id}/messages", response_model=ChatResponse)
 async def send_message(
     session_id: str,
-    message_data: ChatMessageCreate,
+    message_data: ChatRequest,
     gemini_service: GeminiService = Depends(get_gemini_service)
 ) -> ChatResponse:
     """Send a message to a chat session and get AI response."""
     try:
         response = await gemini_service.process_message(
             session_id=session_id,
-            message=message_data.content,
-            attachments=message_data.attachments or [],
-            use_thinking=message_data.use_thinking,
-            enable_search=message_data.enable_search
+            message=message_data.message,
+            attachments=message_data.files or [],
+            use_thinking=message_data.thinking_mode,
+            enable_search=message_data.use_search
         )
         return response
     except ValueError as e:
@@ -95,7 +95,7 @@ async def send_message(
 @router.post("/sessions/{session_id}/messages/stream")
 async def send_message_stream(
     session_id: str,
-    message_data: ChatMessageCreate,
+    message_data: ChatRequest,
     gemini_service: GeminiService = Depends(get_gemini_service)
 ):
     """Send a message and stream the AI response in real-time."""
@@ -103,10 +103,10 @@ async def send_message_stream(
         async def generate_stream():
             async for chunk in gemini_service.process_message_stream(
                 session_id=session_id,
-                message=message_data.content,
-                attachments=message_data.attachments or [],
-                use_thinking=message_data.use_thinking,
-                enable_search=message_data.enable_search
+                message=message_data.message,
+                attachments=message_data.files or [],
+                use_thinking=message_data.thinking_mode,
+                enable_search=message_data.use_search
             ):
                 yield f"data: {json.dumps(chunk)}\n\n"
         

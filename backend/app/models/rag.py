@@ -68,6 +68,15 @@ class SearchResult(BaseModel):
     document_id: Optional[str] = None
 
 
+class RAGContext(BaseModel):
+    """Context retrieved from RAG query for response generation"""
+    query: str
+    relevant_chunks: List[SearchResult]
+    context_text: str
+    source_documents: List[str]
+    confidence_score: float
+
+
 class RAGQuery(BaseModel):
     """RAG query parameters"""
     query: str

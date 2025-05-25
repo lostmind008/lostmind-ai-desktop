@@ -152,3 +152,31 @@ class ErrorResponse(BaseModel):
     detail: Optional[str] = None
     error_code: Optional[str] = None
     timestamp: datetime = Field(default_factory=datetime.now)
+
+
+class ModelSelection(BaseModel):
+    """Available model selection information."""
+    name: str
+    display_name: str
+    description: str
+    max_input_tokens: int
+    max_output_tokens: int
+    supports_images: bool = False
+    supports_audio: bool = False
+    supports_video: bool = False
+    supports_search: bool = False
+    supports_thinking: bool = False
+    version: str = "1.0"
+
+
+class UsageStats(BaseModel):
+    """Usage statistics for a chat session."""
+    session_id: str
+    total_messages: int
+    total_input_tokens: int = 0
+    total_output_tokens: int = 0
+    total_cost_usd: float = 0.0
+    model_used: str
+    session_duration_minutes: float = 0.0
+    created_at: datetime
+    last_activity: datetime

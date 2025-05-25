@@ -15,10 +15,10 @@ from typing import Dict, Any, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
-from core.config import get_settings, Settings
-from utils.logger import get_logger
+from app.core.config import get_settings, Settings
+import logging
 
-logger = get_logger(__name__)
+logger = logging.getLogger(__name__)
 router = APIRouter()
 
 # Store application start time

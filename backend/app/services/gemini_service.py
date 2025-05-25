@@ -21,10 +21,10 @@ from google.genai import types
 
 from app.core.config import Settings
 from app.models.chat import (
-    ChatMessage, ChatSession, ChatSessionCreate, ChatResponse, 
-    ModelSelection, UsageStats, MessageRole
+    ChatMessage, ChatSession, SessionCreateRequest, ChatResponse, 
+    MessageRole, ModelInfo, GenerationConfig  # ModelSelection, UsageStats - TODO: Add these models
 )
-from app.models.knowledge import RAGContext, RAGRequest
+from app.models.rag import ChatWithRAGRequest, RAGResponse, AdvancedRAGQuery, RAGContext
 
 # Placeholder logger until utils.logger is created
 import logging
@@ -542,7 +542,7 @@ class GeminiService:
     async def process_rag_message(
         self,
         session_id: str,
-        rag_request: RAGRequest,
+        rag_request: ChatWithRAGRequest,
         cache_service=None,
         vector_service=None
     ) -> ChatResponse:
