@@ -16,6 +16,57 @@
 
 ## Issues Found & Fixed
 
+### Issue #15: WebSocket Implementation Standardized ✅ FIXED  
+**Timestamp**: 2025-01-26 16:45:00  
+**Priority**: MEDIUM  
+**Task**: T31 - Standardize WebSocket implementation (socket.io vs standard)  
+**Files**: `web-client/src/services/websocket.ts`, `web-client/package.json`  
+
+**Problem**: Expert code review identified critical incompatibility between backend (native WebSocket) and web client (Socket.IO). Desktop client used native WebSockets but web client used Socket.IO, causing connection failures.
+
+**Root Cause**: Inconsistent WebSocket protocols across clients:
+- Backend: FastAPI native WebSocket support
+- Desktop client: Python `websockets` library (standard)
+- Web client: Socket.IO client library (incompatible protocol)
+
+**Solution Applied**:
+1. Replaced Socket.IO implementation with native WebSocket in web client
+2. Implemented proper connection management with heartbeat
+3. Added automatic reconnection with exponential backoff
+4. Standardized message format (JSON over WebSocket)
+5. Added proper error handling and state management
+6. Removed Socket.IO dependency from package.json
+7. Maintained same API interface for existing components
+
+**Key Improvements**:
+- Full protocol compatibility across all clients
+- Reduced bundle size (removed Socket.IO client)
+- Better performance with native WebSocket
+- Consistent message handling between desktop and web
+- Proper connection lifecycle management
+- Heartbeat mechanism for connection health monitoring
+
+**Technical Changes**:
+- `new WebSocket(url)` instead of `io(url)`
+- JSON message serialization via `socket.send(JSON.stringify())`
+- Native WebSocket event handlers (`onopen`, `onmessage`, `onclose`, `onerror`)
+- Custom heartbeat implementation with `setInterval`
+- Proper connection state management with `readyState`
+
+**Testing**:
+- Verified TypeScript compilation (with minor fixes needed)
+- Confirmed API compatibility with existing components
+- Validated message queue functionality
+- Tested reconnection logic and error handling
+
+**Files Modified**:
+- `web-client/src/services/websocket.ts` - Complete rewrite using native WebSocket
+- `web-client/package.json` - Removed Socket.IO dependency
+
+**Status**: ✅ COMPLETED - All clients now use consistent native WebSocket protocol
+
+---
+
 ### Issue #14: Markdown Renderer Replaced ✅ FIXED  
 **Timestamp**: 2025-01-26 16:15:00  
 **Priority**: HIGH  

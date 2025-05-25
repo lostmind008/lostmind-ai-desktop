@@ -3,16 +3,35 @@
  * 
  * Provides type-safe WebSocket communication with automatic reconnection,
  * message queuing, and event handling for chat functionality.
+ * 
+ * Uses native WebSockets for compatibility with FastAPI backend.
  */
 
-import { io, Socket } from 'socket.io-client';
 import {
   WebSocketMessage,
-  ChatMessageWS,
-  ChatResponseWS,
-  ChatStreamChunk,
+  ChatMessage,
+  ChatResponse,
   MessageRole,
 } from '@/types/api';
+
+// Define WebSocket-specific message types
+interface ChatMessageWS extends ChatMessage {
+  type: 'chat_message';
+  session_id: string;
+  use_thinking?: boolean;
+  enable_search?: boolean;
+}
+
+interface ChatResponseWS extends ChatResponse {
+  type: 'chat_response';
+}
+
+interface ChatStreamChunk {
+  type: 'stream_chunk';
+  chunk_type: 'thinking' | 'content' | 'complete';
+  content: string;
+  session_id: string;
+}
 
 type EventCallback<T = any> = (data: T) => void;
 
@@ -27,7 +46,7 @@ interface WebSocketEvents {
 }
 
 export class WebSocketService {
-  private socket: Socket | null = null;
+  private socket: WebSocket | null = null;
   private baseURL: string;
   private sessionId: string | null = null;
   private eventListeners: Map<keyof WebSocketEvents, Set<EventCallback>> = new Map();
@@ -36,23 +55,27 @@ export class WebSocketService {
   private reconnectAttempts: number = 0;
   private maxReconnectAttempts: number = 5;
   private reconnectDelay: number = 1000;
+  private heartbeatInterval: NodeJS.Timeout | null = null;
+  private heartbeatFrequency: number = 30000; // 30 seconds
 
   constructor(baseURL?: string) {
-    this.baseURL = baseURL || process.env.WEBSOCKET_URL || 'ws://localhost:8000';
+    this.baseURL = baseURL || process.env.NEXT_PUBLIC_WEBSOCKET_URL || 'ws://localhost:8000';
     this.initializeEventListeners();
   }
 
   private initializeEventListeners(): void {
-    Object.keys({
-      message: null,
-      'stream-chunk': null,
-      thinking: null,
-      error: null,
-      connected: null,
-      disconnected: null,
-      status: null,
-    } as WebSocketEvents).forEach(event => {
-      this.eventListeners.set(event as keyof WebSocketEvents, new Set());
+    const eventKeys: (keyof WebSocketEvents)[] = [
+      'message',
+      'stream-chunk', 
+      'thinking',
+      'error',
+      'connected',
+      'disconnected',
+      'status'
+    ];
+    
+    eventKeys.forEach(event => {
+      this.eventListeners.set(event, new Set());
     });
   }
 
@@ -60,7 +83,7 @@ export class WebSocketService {
    * Connect to WebSocket for a specific chat session
    */
   async connect(sessionId: string): Promise<void> {
-    if (this.isConnecting || (this.socket?.connected && this.sessionId === sessionId)) {
+    if (this.isConnecting || (this.socket?.readyState === WebSocket.OPEN && this.sessionId === sessionId)) {
       return;
     }
 
@@ -71,44 +94,61 @@ export class WebSocketService {
       // Disconnect existing connection if any
       await this.disconnect();
 
-      // Create new socket connection
+      // Create new WebSocket connection
       const wsUrl = `${this.baseURL}/ws/${sessionId}`;
       console.log(`[WebSocket] Connecting to ${wsUrl}`);
 
-      this.socket = io(wsUrl, {
-        transports: ['websocket'],
-        timeout: 10000,
-        autoConnect: false,
-      });
-
-      this.setupSocketEventListeners();
-      
       return new Promise((resolve, reject) => {
         const timeout = setTimeout(() => {
+          this.isConnecting = false;
           reject(new Error('WebSocket connection timeout'));
         }, 10000);
 
-        this.socket!.on('connect', () => {
+        this.socket = new WebSocket(wsUrl);
+
+        this.socket.onopen = () => {
           clearTimeout(timeout);
           this.isConnecting = false;
           this.reconnectAttempts = 0;
           console.log(`[WebSocket] Connected to session ${sessionId}`);
+          
+          // Start heartbeat
+          this.startHeartbeat();
           
           // Process queued messages
           this.processMessageQueue();
           
           this.emit('connected', { session_id: sessionId });
           resolve();
-        });
+        };
 
-        this.socket!.on('connect_error', (error) => {
+        this.socket.onerror = (error) => {
           clearTimeout(timeout);
           this.isConnecting = false;
           console.error('[WebSocket] Connection error:', error);
-          reject(error);
-        });
+          reject(new Error('WebSocket connection failed'));
+        };
 
-        this.socket!.connect();
+        this.socket.onclose = (event) => {
+          clearTimeout(timeout);
+          this.isConnecting = false;
+          this.stopHeartbeat();
+          
+          console.log(`[WebSocket] Connection closed: ${event.code} ${event.reason}`);
+          
+          if (this.sessionId) {
+            this.emit('disconnected', { session_id: this.sessionId });
+          }
+          
+          // Attempt reconnection for unexpected closes
+          if (event.code !== 1000 && event.code !== 1001) {
+            this.attemptReconnection();
+          }
+        };
+
+        this.socket.onmessage = (event) => {
+          this.handleMessage(event);
+        };
       });
 
     } catch (error) {
@@ -125,11 +165,17 @@ export class WebSocketService {
     if (this.socket) {
       console.log('[WebSocket] Disconnecting...');
       
+      this.stopHeartbeat();
+      
       if (this.sessionId) {
         this.emit('disconnected', { session_id: this.sessionId });
       }
 
-      this.socket.disconnect();
+      // Close with normal closure code
+      if (this.socket.readyState === WebSocket.OPEN) {
+        this.socket.close(1000, 'Normal closure');
+      }
+      
       this.socket = null;
       this.sessionId = null;
       this.isConnecting = false;
@@ -165,7 +211,7 @@ export class WebSocketService {
    * Send raw WebSocket message
    */
   private async sendRawMessage(message: WebSocketMessage): Promise<void> {
-    if (!this.socket?.connected) {
+    if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
       // Queue message if not connected
       this.messageQueue.push(message);
       console.log('[WebSocket] Message queued (not connected)');
@@ -173,7 +219,7 @@ export class WebSocketService {
     }
 
     try {
-      this.socket.emit('message', message);
+      this.socket.send(JSON.stringify(message));
       console.log('[WebSocket] Message sent:', message.type);
     } catch (error) {
       console.error('[WebSocket] Failed to send message:', error);
@@ -185,11 +231,11 @@ export class WebSocketService {
    * Process queued messages when connection is established
    */
   private processMessageQueue(): void {
-    if (this.messageQueue.length > 0 && this.socket?.connected) {
+    if (this.messageQueue.length > 0 && this.socket?.readyState === WebSocket.OPEN) {
       console.log(`[WebSocket] Processing ${this.messageQueue.length} queued messages`);
       
       this.messageQueue.forEach(message => {
-        this.socket!.emit('message', message);
+        this.socket!.send(JSON.stringify(message));
       });
       
       this.messageQueue = [];
@@ -197,61 +243,65 @@ export class WebSocketService {
   }
 
   /**
-   * Setup socket event listeners
+   * Handle incoming WebSocket messages
    */
-  private setupSocketEventListeners(): void {
-    if (!this.socket) return;
+  private handleMessage(event: MessageEvent): void {
+    try {
+      const data = JSON.parse(event.data);
+      console.log('[WebSocket] Received message:', data.type);
 
-    // Chat response
-    this.socket.on('chat_response', (data: ChatResponseWS) => {
-      console.log('[WebSocket] Received chat response');
-      this.emit('message', data);
-    });
-
-    // Streaming chunks
-    this.socket.on('stream_chunk', (data: ChatStreamChunk) => {
-      console.log('[WebSocket] Received stream chunk:', data.type);
-      this.emit('stream-chunk', data);
-    });
-
-    // Thinking updates
-    this.socket.on('thinking', (data: { content: string }) => {
-      if (this.sessionId) {
-        this.emit('thinking', { content: data.content, session_id: this.sessionId });
+      switch (data.type) {
+        case 'chat_response':
+          this.emit('message', data as ChatResponseWS);
+          break;
+        case 'stream_chunk':
+          this.emit('stream-chunk', data as ChatStreamChunk);
+          break;
+        case 'thinking':
+          if (this.sessionId) {
+            this.emit('thinking', { content: data.content, session_id: this.sessionId });
+          }
+          break;
+        case 'status':
+          if (this.sessionId) {
+            this.emit('status', { status: data.status, session_id: this.sessionId });
+          }
+          break;
+        case 'error':
+          console.error('[WebSocket] Received error:', data.message);
+          this.emit('error', { message: data.message, session_id: this.sessionId || undefined });
+          break;
+        case 'pong':
+          console.log('[WebSocket] Pong received');
+          break;
+        default:
+          console.warn('[WebSocket] Unknown message type:', data.type);
       }
-    });
-
-    // Status updates
-    this.socket.on('status', (data: { status: string }) => {
-      if (this.sessionId) {
-        this.emit('status', { status: data.status, session_id: this.sessionId });
-      }
-    });
-
-    // Error handling
-    this.socket.on('error', (data: { message: string }) => {
-      console.error('[WebSocket] Received error:', data.message);
-      this.emit('error', { message: data.message, session_id: this.sessionId || undefined });
-    });
-
-    // Connection events
-    this.socket.on('disconnect', (reason) => {
-      console.log('[WebSocket] Disconnected:', reason);
-      if (this.sessionId) {
-        this.emit('disconnected', { session_id: this.sessionId });
-      }
-      
-      // Attempt reconnection for certain disconnect reasons
-      if (reason === 'io server disconnect' || reason === 'transport close') {
-        this.attemptReconnection();
-      }
-    });
-
-    // Ping/pong for connection health
-    this.socket.on('pong', () => {
-      console.log('[WebSocket] Pong received');
-    });
+    } catch (error) {
+      console.error('[WebSocket] Failed to parse message:', error);
+    }
   }
+
+  /**
+   * Start heartbeat to keep connection alive
+   */
+  private startHeartbeat(): void {
+    this.stopHeartbeat();
+    this.heartbeatInterval = setInterval(() => {
+      this.ping();
+    }, this.heartbeatFrequency);
+  }
+
+  /**
+   * Stop heartbeat
+   */
+  private stopHeartbeat(): void {
+    if (this.heartbeatInterval) {
+      clearInterval(this.heartbeatInterval);
+      this.heartbeatInterval = null;
+    }
+  }
+
 
   /**
    * Attempt to reconnect with exponential backoff
@@ -328,8 +378,9 @@ export class WebSocketService {
    * Send ping to check connection health
    */
   ping(): void {
-    if (this.socket?.connected) {
-      this.socket.emit('ping');
+    if (this.socket?.readyState === WebSocket.OPEN) {
+      const pingMessage = { type: 'ping' };
+      this.socket.send(JSON.stringify(pingMessage));
       console.log('[WebSocket] Ping sent');
     }
   }
@@ -338,7 +389,7 @@ export class WebSocketService {
    * Get connection status
    */
   get isConnected(): boolean {
-    return this.socket?.connected || false;
+    return this.socket?.readyState === WebSocket.OPEN || false;
   }
 
   /**
@@ -353,16 +404,13 @@ export class WebSocketService {
    */
   get connectionState(): 'connected' | 'connecting' | 'disconnected' {
     if (this.isConnecting) return 'connecting';
-    if (this.socket?.connected) return 'connected';
+    if (this.socket?.readyState === WebSocket.OPEN) return 'connected';
     return 'disconnected';
   }
 }
 
 // Export singleton instance
 export const webSocketService = new WebSocketService();
-
-// Export class for testing or custom instances
-export { WebSocketService };
 
 // Helper function to check WebSocket connectivity
 export const checkWebSocketConnectivity = async (sessionId: string): Promise<boolean> => {
