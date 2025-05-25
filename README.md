@@ -155,16 +155,20 @@ npm run dev
 
 ### 4. Desktop Client Setup
 ```bash
-# Use same virtual environment as backend
-# or create new one specifically for desktop
+# From project root directory
+# Use same virtual environment as backend or create new one
 pip install PyQt6  # Version 6.9.0 tested and working
 
-# Run desktop app
+# Run desktop app (from project root)
 python src/main.py
 
-# Alternative: Use the project root
-cd ../../  # Back to project root
+# Alternative with explicit Python path
 PYTHONPATH=./src python src/main.py
+
+# Or use the convenience scripts
+python run.py           # Cross-platform
+./run.sh               # Unix/Linux/macOS  
+run.bat                # Windows
 ```
 
 ## 🚀 Usage Examples
@@ -261,25 +265,48 @@ npm run dev
 ```
 ├── backend/                    # FastAPI backend service
 │   ├── app/
-│   │   ├── api/               # API endpoints
-│   │   ├── core/              # Core configuration
-│   │   ├── models/            # Pydantic models
-│   │   └── services/          # Business logic
+│   │   ├── api/               # API endpoints (chat, health, knowledge)
+│   │   │   └── endpoints/     # RAG and chat_rag endpoints
+│   │   ├── core/              # Core configuration and database
+│   │   ├── database/          # Database utilities
+│   │   ├── models/            # Pydantic models (chat, RAG)
+│   │   ├── services/          # Business logic (Gemini, RAG, GCS)
+│   │   ├── utils/             # Utility modules
+│   │   └── main.py            # FastAPI application entry
 │   ├── alembic/               # Database migrations
-│   └── requirements.txt
+│   ├── data/                  # Data storage
+│   ├── tests/                 # Test suite
+│   ├── uploads/               # File uploads
+│   └── requirements.txt       # Backend dependencies (147 packages)
+├── src/                       # Desktop application (PyQt6)
+│   ├── ui/                    # UI components
+│   │   ├── main_window.py     # Main application window
+│   │   ├── chat_display.py    # Chat interface
+│   │   └── ...                # Other UI components
+│   ├── services/              # Desktop services
+│   ├── utils/                 # Utility modules
+│   ├── config_manager.py      # Configuration management
+│   ├── gemini_assistant.py    # AI assistant logic
+│   └── main.py                # Desktop app entry point
 ├── web-client/                # Next.js web application
 │   ├── src/
 │   │   ├── app/               # App router pages
 │   │   ├── components/        # React components
+│   │   │   └── Chat/          # Chat interface components
 │   │   ├── services/          # API & WebSocket services
 │   │   └── types/             # TypeScript definitions
+│   ├── node_modules/          # Dependencies (860 packages)
 │   └── package.json
-├── V2/PyQt6_Gemini_App/       # Desktop application
-│   ├── src/
-│   │   ├── ui/                # UI components
-│   │   └── utils/             # Utility modules
-│   └── requirements.txt
-└── README.md                  # This file
+├── V2/PyQt6_Gemini_App/       # Legacy desktop structure
+│   └── backend/               # Old backend service
+├── config/                    # Configuration files
+├── logs/                      # Application logs
+├── venv_test_py311/          # Python 3.11 testing environment
+├── TESTING_LOG.md            # Comprehensive testing documentation
+├── CLAUDE_TASKS.md           # Task management and progress
+├── start_full_system.py      # Full system startup script
+├── requirements.txt          # Root dependencies
+└── README.md                 # This file
 ```
 
 ## 🔧 Configuration
@@ -302,7 +329,7 @@ SECRET_KEY=your-secret-key
 DEBUG=true  # Enables mock authentication
 ```
 
-### Desktop Configuration (V2/PyQt6_Gemini_App/config/config.json)
+### Desktop Configuration (config/config.json)
 ```json
 {
   "models": {
