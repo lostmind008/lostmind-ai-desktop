@@ -1,0 +1,1 @@
+"""Data models and schemas for LostMindAI Backend API."""
