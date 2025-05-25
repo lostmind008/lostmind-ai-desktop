@@ -1,0 +1,275 @@
+2025-03-13 07:36:05,797 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 07:36:05,797 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 07:36:05,797 - root - INFO - Log level set to INFO
+2025-03-13 07:36:07,672 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 07:36:07,672 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 07:36:09,747 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 07:36:09,749 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-1.5-pro-002
+2025-03-13 07:36:09,780 - root - ERROR - Error creating main window
+Traceback (most recent call last):
+  File "/Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/src/main.py", line 222, in main
+    main_window = MainWindow(config)
+                  ^^^^^^^^^^^^^^^^^^
+  File "/Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/src/ui/main_window.py", line 72, in __init__
+    self.init_ui()
+  File "/Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/src/ui/main_window.py", line 131, in init_ui
+    self.model_panel = ModelPanel(self.config, self.model_registry, self.assistant)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/src/ui/model_panel.py", line 57, in __init__
+    self.update_model_info(self.assistant.selected_model)
+  File "/Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/src/ui/model_panel.py", line 192, in update_model_info
+    self.base_model_label.parent().layout().setVisible(False)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'QVBoxLayout' object has no attribute 'setVisible'
+2025-03-13 07:38:40,899 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 07:38:40,899 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 07:38:40,899 - root - INFO - Log level set to INFO
+2025-03-13 07:38:42,193 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 07:38:42,193 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 07:38:44,108 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 07:38:44,110 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-1.5-pro-002
+2025-03-13 07:38:58,120 - config_manager - INFO - Configuration saved to /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 07:39:14,700 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 07:39:14,700 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 07:39:14,700 - root - INFO - Log level set to INFO
+2025-03-13 07:39:15,952 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 07:39:15,952 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 07:39:17,146 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 07:39:17,149 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-1.5-pro-002
+2025-03-13 07:40:09,970 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 07:40:09,971 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 07:40:09,971 - root - INFO - Log level set to INFO
+2025-03-13 07:40:11,243 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 07:40:11,243 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 07:40:13,082 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 07:40:13,083 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-1.5-pro-002
+2025-03-13 07:40:45,432 - gemini_assistant - INFO - Using generate_content mode for model: gemini-2.0-flash-001
+2025-03-13 07:40:45,435 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 07:40:48,220 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 07:40:48,221 - gemini_assistant - INFO - Chat started successfully
+2025-03-13 07:42:55,412 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 07:42:55,412 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 07:42:55,413 - root - INFO - Log level set to INFO
+2025-03-13 07:42:56,718 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 07:42:56,718 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 07:42:58,599 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 07:42:58,601 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-1.5-pro-002
+2025-03-13 07:43:07,143 - gemini_assistant - INFO - Using generate_content mode for model: gemini-2.0-pro-001
+2025-03-13 07:43:07,145 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 07:43:08,343 - gemini_assistant - ERROR - Failed to process system instruction: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'Publisher Model `projects/lostmind-ai-sumit-mon/locations/us-central1/publishers/google/models/gemini-2.0-pro-001` not found.', 'status': 'NOT_FOUND'}}
+2025-03-13 07:43:08,343 - gemini_assistant - INFO - Using generate_content mode without system instruction
+2025-03-13 17:26:49,678 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 17:26:49,678 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 17:26:49,678 - root - INFO - Log level set to INFO
+2025-03-13 17:26:51,023 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 17:26:51,023 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 17:26:53,012 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 17:26:53,014 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-1.5-pro-002
+2025-03-13 17:27:24,750 - gemini_assistant - INFO - Using generate_content mode for model: gemini-1.5-pro-002
+2025-03-13 17:27:24,752 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 17:27:29,255 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 17:27:29,256 - gemini_assistant - INFO - Chat started successfully
+2025-03-13 17:41:34,527 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 17:41:34,527 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 17:41:34,527 - root - INFO - Log level set to INFO
+2025-03-13 17:41:35,853 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 17:41:35,853 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 17:41:37,745 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 17:41:37,746 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-1.5-pro-002
+2025-03-13 17:41:49,091 - gemini_assistant - INFO - Using generate_content mode for model: gemini-2.0-flash-001
+2025-03-13 17:41:49,094 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 17:41:52,177 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 17:41:52,177 - gemini_assistant - INFO - Chat started successfully
+2025-03-13 17:44:26,793 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 17:44:26,793 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 17:44:26,793 - root - INFO - Log level set to INFO
+2025-03-13 17:44:28,099 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 17:44:28,099 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 17:44:29,953 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 17:44:29,954 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-1.5-pro-002
+2025-03-13 17:44:35,465 - gemini_assistant - INFO - Using generate_content mode for model: gemini-1.5-pro-002
+2025-03-13 17:44:35,467 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 17:44:40,055 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 17:44:40,055 - gemini_assistant - INFO - Chat started successfully
+2025-03-13 17:44:40,059 - ui.markdown_renderer - ERROR - Error rendering markdown: look-behind requires fixed-width pattern
+2025-03-13 17:44:47,020 - ui.markdown_renderer - ERROR - Error rendering markdown: look-behind requires fixed-width pattern
+2025-03-13 17:44:47,123 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 17:44:47,123 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 17:44:47,934 - ui.markdown_renderer - ERROR - Error rendering markdown: look-behind requires fixed-width pattern
+2025-03-13 17:44:47,987 - ui.markdown_renderer - ERROR - Error rendering markdown: look-behind requires fixed-width pattern
+2025-03-13 17:44:47,993 - gemini_assistant - INFO - Response received in 0.87 seconds
+2025-03-13 17:45:23,243 - ui.markdown_renderer - ERROR - Error rendering markdown: look-behind requires fixed-width pattern
+2025-03-13 17:45:23,348 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 17:45:23,349 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 17:45:23,686 - gemini_assistant - ERROR - Failed to send message: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.', 'status': 'RESOURCE_EXHAUSTED'}}
+2025-03-13 17:45:23,690 - ui.markdown_renderer - ERROR - Error rendering markdown: look-behind requires fixed-width pattern
+2025-03-13 17:47:04,017 - gemini_assistant - INFO - Chat exported to HTML: /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/test.html
+2025-03-13 17:47:47,533 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 17:47:47,533 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 17:47:47,533 - root - INFO - Log level set to INFO
+2025-03-13 17:47:48,844 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 17:47:48,844 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 17:47:50,821 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 17:47:50,822 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-1.5-pro-002
+2025-03-13 17:49:39,842 - config_manager - INFO - Configuration saved to /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 17:49:44,750 - gemini_assistant - INFO - Using generate_content mode for model: gemini-2.0-flash-001
+2025-03-13 17:49:44,752 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 17:49:46,642 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 17:49:46,643 - gemini_assistant - INFO - Chat started successfully
+2025-03-13 17:49:46,646 - ui.markdown_renderer - ERROR - Error rendering markdown: look-behind requires fixed-width pattern
+2025-03-13 17:50:05,586 - ui.markdown_renderer - ERROR - Error rendering markdown: look-behind requires fixed-width pattern
+2025-03-13 17:50:05,689 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 17:50:05,690 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 17:50:07,115 - ui.markdown_renderer - ERROR - Error rendering markdown: look-behind requires fixed-width pattern
+2025-03-13 17:50:07,146 - ui.markdown_renderer - ERROR - Error rendering markdown: look-behind requires fixed-width pattern
+2025-03-13 17:50:07,153 - gemini_assistant - INFO - Response received in 1.46 seconds
+2025-03-13 17:51:50,659 - ui.markdown_renderer - ERROR - Error rendering markdown: look-behind requires fixed-width pattern
+2025-03-13 17:51:50,766 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 17:51:50,766 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 17:51:52,268 - ui.markdown_renderer - ERROR - Error rendering markdown: look-behind requires fixed-width pattern
+2025-03-13 17:51:52,294 - ui.markdown_renderer - ERROR - Error rendering markdown: look-behind requires fixed-width pattern
+2025-03-13 17:51:52,301 - gemini_assistant - INFO - Response received in 1.54 seconds
+2025-03-13 18:06:33,799 - config_manager - INFO - Configuration saved to /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 18:06:50,174 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 18:06:50,175 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 18:06:50,175 - root - INFO - Log level set to INFO
+2025-03-13 18:06:51,470 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 18:06:51,471 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 18:06:53,358 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 18:06:53,359 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-2.0-flash-001
+2025-03-13 18:07:07,801 - gemini_assistant - INFO - Using generate_content mode for model: gemini-2.0-flash-001
+2025-03-13 18:07:07,802 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:07:09,480 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:07:09,480 - gemini_assistant - INFO - Chat started successfully
+2025-03-13 18:07:17,832 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:07:17,832 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:07:19,336 - gemini_assistant - INFO - Response received in 1.50 seconds
+2025-03-13 18:13:01,046 - config_manager - INFO - Configuration saved to /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 18:13:05,565 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 18:13:05,565 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 18:13:05,565 - root - INFO - Log level set to INFO
+2025-03-13 18:13:06,831 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 18:13:06,832 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 18:13:08,716 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 18:13:08,718 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-2.0-flash-001
+2025-03-13 18:13:20,865 - gemini_assistant - INFO - Using generate_content mode for model: gemini-2.0-flash-001
+2025-03-13 18:13:20,866 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:13:22,773 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:13:22,773 - gemini_assistant - INFO - Chat started successfully
+2025-03-13 18:13:33,111 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:13:33,113 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:13:34,804 - gemini_assistant - INFO - Response received in 1.69 seconds
+2025-03-13 18:13:48,201 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:13:48,202 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:13:49,638 - gemini_assistant - INFO - Response received in 1.44 seconds
+2025-03-13 18:22:33,319 - config_manager - INFO - Configuration saved to /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 18:22:38,533 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 18:22:38,533 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 18:22:38,533 - root - INFO - Log level set to INFO
+2025-03-13 18:22:39,818 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 18:22:39,819 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 18:22:41,722 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 18:22:41,723 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-2.0-flash-001
+2025-03-13 18:23:22,601 - gemini_assistant - INFO - Using generate_content mode for model: gemini-2.0-flash-001
+2025-03-13 18:23:22,603 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:23:24,364 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:23:24,365 - gemini_assistant - INFO - Chat started successfully
+2025-03-13 18:23:35,879 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:23:35,880 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:23:37,399 - gemini_assistant - INFO - Response received in 1.52 seconds
+2025-03-13 18:43:40,125 - config_manager - INFO - Configuration saved to /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 18:43:45,542 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 18:43:45,542 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 18:43:45,542 - root - INFO - Log level set to INFO
+2025-03-13 18:43:46,822 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 18:43:46,822 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 18:43:48,884 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 18:43:48,885 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-2.0-flash-001
+2025-03-13 18:43:55,310 - gemini_assistant - INFO - Using generate_content mode for model: gemini-2.0-flash-001
+2025-03-13 18:43:55,311 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:43:57,102 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:43:57,102 - gemini_assistant - INFO - Chat started successfully
+2025-03-13 18:44:01,281 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:44:01,282 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:44:02,992 - gemini_assistant - INFO - Response received in 1.71 seconds
+2025-03-13 18:44:16,966 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:44:16,968 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:44:20,661 - gemini_assistant - INFO - Response received in 3.70 seconds
+2025-03-13 18:46:50,121 - config_manager - INFO - Configuration saved to /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 18:46:55,182 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 18:46:55,183 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 18:46:55,183 - root - INFO - Log level set to INFO
+2025-03-13 18:46:56,464 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 18:46:56,465 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 18:46:58,354 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 18:46:58,355 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-2.0-flash-001
+2025-03-13 18:47:04,623 - gemini_assistant - INFO - Using generate_content mode for model: gemini-2.0-flash-001
+2025-03-13 18:47:04,625 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:47:09,190 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:47:09,191 - gemini_assistant - INFO - Chat started successfully
+2025-03-13 18:47:13,306 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:47:13,307 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:47:14,808 - gemini_assistant - INFO - Response received in 1.50 seconds
+2025-03-13 18:47:47,552 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:47:47,554 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:47:50,086 - gemini_assistant - INFO - Response received in 2.53 seconds
+2025-03-13 18:48:21,994 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:48:21,995 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:48:24,994 - gemini_assistant - INFO - Response received in 3.00 seconds
+2025-03-13 18:49:27,821 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:49:27,822 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:49:32,501 - gemini_assistant - INFO - Response received in 4.68 seconds
+2025-03-13 18:50:31,649 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:50:31,651 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:50:35,882 - gemini_assistant - INFO - Response received in 4.23 seconds
+2025-03-13 18:50:58,282 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:50:58,283 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:51:00,878 - gemini_assistant - INFO - Response received in 2.60 seconds
+2025-03-13 18:51:57,547 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:51:57,550 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:52:00,684 - gemini_assistant - INFO - Response received in 3.14 seconds
+2025-03-13 18:52:43,776 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:52:43,778 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:52:48,132 - gemini_assistant - INFO - Response received in 4.36 seconds
+2025-03-13 18:53:29,332 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:53:29,334 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:53:31,852 - gemini_assistant - INFO - Response received in 2.52 seconds
+2025-03-13 18:54:16,252 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:54:16,254 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:54:19,655 - gemini_assistant - INFO - Response received in 3.40 seconds
+2025-03-13 18:54:29,781 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 18:54:29,783 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 18:54:33,279 - gemini_assistant - INFO - Response received in 3.50 seconds
+2025-03-13 18:54:57,656 - gemini_assistant - INFO - Chat exported to text: /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/Learning and Knowledge Database/Chat log exported/TEST1.txt
+2025-03-13 19:18:10,493 - root - INFO - Starting LostMind AI Gemini Chat Assistant
+2025-03-13 19:18:10,494 - config_manager - INFO - Configuration loaded successfully from /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json
+2025-03-13 19:18:10,494 - root - INFO - Log level set to INFO
+2025-03-13 19:18:11,786 - model_registry - INFO - GenAI client initialized with project=lostmind-ai-sumit-mon, location=us-central1
+2025-03-13 19:18:11,786 - model_registry - INFO - Discovering models from Vertex AI...
+2025-03-13 19:18:13,673 - model_registry - ERROR - Failed to discover models: 404 Not Found. {'message': '<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n  <title>Error 404 (Not Found)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>404.</b> <ins>That’s an error.</ins>\n  <p>The requested URL <code>/v1/publishers/google/models</code> was not found on this server.  <ins>That’s all we know.</ins>\n', 'status': 'Not Found'}
+2025-03-13 19:18:13,675 - gemini_assistant - INFO - Gemini Assistant initialized with model: gemini-2.0-flash-001
+2025-03-13 19:18:20,548 - gemini_assistant - INFO - Using generate_content mode for model: gemini-2.0-flash-001
+2025-03-13 19:18:20,550 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 19:18:22,410 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 19:18:22,410 - gemini_assistant - INFO - Chat started successfully
+2025-03-13 19:18:25,617 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 19:18:25,618 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 19:18:27,351 - gemini_assistant - INFO - Response received in 1.73 seconds
+2025-03-13 19:18:32,500 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 19:18:32,501 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 19:18:34,022 - gemini_assistant - INFO - Response received in 1.52 seconds
+2025-03-13 19:19:10,772 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 19:19:10,774 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 19:19:18,528 - gemini_assistant - INFO - Response received in 7.76 seconds
+2025-03-13 19:19:35,086 - gemini_assistant - INFO - Chat exported to HTML: /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/Learning and Knowledge Database/Chat log exported/test2.html
+2025-03-13 19:20:22,982 - gemini_assistant - INFO - File 'TEST1.txt' uploaded successfully
+2025-03-13 19:20:44,201 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 19:20:44,202 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 19:20:51,946 - gemini_assistant - INFO - Response received in 7.75 seconds
+2025-03-13 19:21:00,931 - gemini_assistant - INFO - Chat exported to HTML: /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/Learning and Knowledge Database/Chat log exported/test3.html
+2025-03-13 19:21:37,486 - gemini_assistant - INFO - File 'Sumit Mondal RESUME March 2025.pdf' uploaded successfully
+2025-03-13 19:21:53,711 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-03-13 19:21:53,713 - google_genai.models - INFO - AFC remote call 1 is done.
+2025-03-13 19:22:02,924 - gemini_assistant - INFO - Response received in 9.21 seconds
+2025-03-13 19:22:16,060 - gemini_assistant - INFO - Chat exported to text: /Users/sumitm1/Downloads/test4.txt
+2025-03-14 10:39:40,489 - config_manager - INFO - Configuration saved to /Users/sumitm1/Documents/myproject/Ongoing Projects/Upgrading Lostmind AI/PyQt6_Gemini_App/config/config.json

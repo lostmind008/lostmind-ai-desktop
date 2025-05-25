@@ -1,0 +1,8 @@
+PyQt6>=6.4.0
+google-cloud-aiplatform>=1.37.0
+google-generativeai>=0.3.1
+Pillow>=9.5.0
+pygments>=2.15.0
+markdown>=3.4.3
+python-dotenv>=1.0.0
+requests>=2.31.0

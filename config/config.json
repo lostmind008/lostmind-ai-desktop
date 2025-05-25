@@ -1,0 +1,159 @@
+{
+  "authentication": {
+    "vertex_ai": {
+      "project_id": "lostmind-ai-sumit-mon",
+      "location": "us-central1"
+    }
+  },
+  "models": [
+    {
+      "id": "gemini-1.5-pro-002",
+      "display_name": "Gemini 1.5 Pro",
+      "description": "Versatile model for general use",
+      "type": "base",
+      "supported_methods": [
+        "generateContent",
+        "streamGenerateContent",
+        "countTokens"
+      ]
+    },
+    {
+      "id": "gemini-1.5-flash-002",
+      "display_name": "Gemini 1.5 Flash",
+      "description": "Fast, efficient model for quick responses",
+      "type": "base",
+      "supported_methods": [
+        "generateContent",
+        "streamGenerateContent",
+        "countTokens"
+      ]
+    },
+    {
+      "id": "gemini-2.0-pro-001",
+      "display_name": "Gemini 2.0 Pro",
+      "description": "Advanced model with improved capabilities",
+      "type": "base",
+      "supported_methods": [
+        "generateContent",
+        "streamGenerateContent",
+        "countTokens",
+        "googleSearch"
+      ]
+    },
+    {
+      "id": "gemini-2.0-flash-thinking-exp-01-21",
+      "display_name": "Gemini 2.0 Flash Thinking Experimental 01-21",
+      "description": "Advanced Flash Thinking model with improved capabilities",
+      "type": "base",
+      "supported_methods": [
+        "generateContent",
+        "streamGenerateContent",
+        "countTokens"
+      ]
+    },
+    {
+      "id": "gemini-2.0-flash-001",
+      "display_name": "Gemini 2.0 Flash",
+      "description": "Fast model with Google Search capabilities",
+      "type": "base",
+      "supported_methods": [
+        "generateContent",
+        "streamGenerateContent",
+        "countTokens",
+        "googleSearch"
+      ]
+    }
+  ],
+  "ui": {
+    "theme": "dark",
+    "font_size": 12,
+    "window_title": "LostMindAI Desktop - AI Assistant",
+    "window_size": [
+      1024,
+      768
+    ]
+  },
+  "file_handling": {
+    "supported_types": {
+      "image": {
+        "extensions": [
+          ".jpg",
+          ".jpeg",
+          ".png",
+          ".gif",
+          ".bmp"
+        ],
+        "max_size_mb": 10,
+        "mime_types": {
+          ".jpg": "image/jpeg",
+          ".jpeg": "image/jpeg",
+          ".png": "image/png",
+          ".gif": "image/gif",
+          ".bmp": "image/bmp"
+        }
+      },
+      "document": {
+        "extensions": [
+          ".pdf",
+          ".txt",
+          ".md",
+          ".py",
+          ".java",
+          ".js",
+          ".html",
+          ".css",
+          ".json",
+          ".csv"
+        ],
+        "max_size_mb": 10,
+        "mime_types": {
+          ".pdf": "application/pdf",
+          ".txt": "text/plain",
+          ".md": "text/markdown",
+          ".py": "text/x-python",
+          ".java": "text/x-java",
+          ".js": "text/javascript",
+          ".html": "text/html",
+          ".css": "text/css",
+          ".json": "application/json",
+          ".csv": "text/csv"
+        }
+      },
+      "video": {
+        "extensions": [
+          ".mp4",
+          ".webm",
+          ".avi"
+        ],
+        "max_size_mb": 50,
+        "mime_types": {
+          ".mp4": "video/mp4",
+          ".webm": "video/webm",
+          ".avi": "video/x-msvideo"
+        }
+      }
+    }
+  },
+  "features": {
+    "streaming": true,
+    "file_uploads": true,
+    "search_grounding": true,
+    "youtube_support": true,
+    "gcs_support": true
+  },
+  "default_settings": {
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "max_output_tokens": 8190,
+    "default_model": "gemini-2.0-flash-001",
+    "default_instruction": "You are an expert coding assistant with extensive programming knowledge across multiple languages and frameworks. Your main responsibilities are to:\n\n1. Provide clear, efficient, and well-documented code examples.\n2. Debug and fix issues in code that users share with you.\n3. Explain programming concepts and patterns clearly.\n4. Help users optimize their code for better performance and readability.\n5. Recommend best practices and modern approaches for development tasks.\n\nWhen writing code, prioritize:\n- Clarity and readability over clever optimizations\n- Comprehensive error handling\n- Adherence to language/framework conventions and best practices\n- Security considerations\n- Detailed comments for complex or non-obvious sections\n\nFor debugging issues, analyze the problem systematically and explain your reasoning while suggesting fixes. When explaining concepts, use examples to illustrate your points."
+  },
+  "advanced": {
+    "logging_level": "INFO",
+    "error_reporting": {
+      "send_to_docker": true,
+      "docker_host": "localhost",
+      "docker_port": 5001
+    }
+  }
+}
