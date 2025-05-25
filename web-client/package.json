@@ -1,0 +1,79 @@
+{
+  "name": "lostmindai-web-client",
+  "version": "1.0.0",
+  "description": "Next.js web client for LostMindAI chat assistant",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "typescript": "^5.0.0",
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "@tailwindcss/forms": "^0.5.0",
+    "@tailwindcss/typography": "^0.5.0",
+    "lucide-react": "^0.294.0",
+    "clsx": "^2.0.0",
+    "class-variance-authority": "^0.7.0",
+    "socket.io-client": "^4.7.0",
+    "axios": "^1.6.0",
+    "react-hook-form": "^7.47.0",
+    "@hookform/resolvers": "^3.3.0",
+    "zod": "^3.22.0",
+    "react-markdown": "^9.0.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "react-hot-toast": "^2.4.0",
+    "framer-motion": "^10.16.0",
+    "react-dropzone": "^14.2.0",
+    "date-fns": "^2.30.0",
+    "uuid": "^9.0.0",
+    "@types/uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.5.0",
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.0.0",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/user-event": "^14.0.0",
+    "@types/react-syntax-highlighter": "^15.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "keywords": [
+    "nextjs",
+    "react",
+    "typescript",
+    "ai",
+    "chat",
+    "gemini",
+    "lostmindai"
+  ],
+  "author": "LostMindAI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lostmindai/desktop-app-v2"
+  }
+}

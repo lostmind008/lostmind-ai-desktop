@@ -15,19 +15,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import uvicorn
 
-from core.config import get_settings
-from api import chat, health, knowledge, files
-from services.gemini_service import GeminiService
-from services.cache_service import CacheService
-from utils.logger import setup_logging
+from app.core.config import Settings
+from app.api import health, chat, knowledge
+from app.api.endpoints import rag, chat_rag
+from app.core.dependencies import initialize_services, cleanup_services, get_gemini_service
+from app.services.gemini_service import GeminiService
 
 # Setup logging
-setup_logging()
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-# Global services
-gemini_service: GeminiService = None
-cache_service: CacheService = None
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -35,17 +31,11 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("Starting LostMindAI Backend API Service...")
     
-    global gemini_service, cache_service
-    settings = get_settings()
+    settings = Settings()
     
     # Initialize services
     try:
-        cache_service = CacheService(settings)
-        await cache_service.startup()
-        
-        gemini_service = GeminiService(settings, cache_service)
-        await gemini_service.startup()
-        
+        await initialize_services(settings)
         logger.info("All services initialized successfully")
     except Exception as e:
         logger.error(f"Failed to initialize services: {e}")
@@ -55,10 +45,7 @@ async def lifespan(app: FastAPI):
     
     # Shutdown
     logger.info("Shutting down LostMindAI Backend API Service...")
-    if gemini_service:
-        await gemini_service.shutdown()
-    if cache_service:
-        await cache_service.shutdown()
+    await cleanup_services()
 
 # Create FastAPI application
 app = FastAPI(
@@ -80,10 +67,11 @@ app.add_middleware(
 )
 
 # Include API routers
-app.include_router(health.router, prefix="/api/v1", tags=["health"])
-app.include_router(chat.router, prefix="/api/v1", tags=["chat"])
-app.include_router(knowledge.router, prefix="/api/v1", tags=["knowledge"])
-app.include_router(files.router, prefix="/api/v1", tags=["files"])
+app.include_router(health.router, prefix="/api/v1")
+app.include_router(chat.router, prefix="/api/v1")
+app.include_router(knowledge.router, prefix="/api/v1")
+app.include_router(rag.router, prefix="/api/v1/rag", tags=["RAG"])
+app.include_router(chat_rag.router, prefix="/api/v1/chat", tags=["Chat with RAG"])
 
 # WebSocket connection manager
 class ConnectionManager:
@@ -142,16 +130,17 @@ async def websocket_endpoint(websocket: WebSocket, session_id: str):
             # Process chat message through Gemini service
             if data.get("type") == "chat_message":
                 try:
-                    response = await gemini_service.process_chat_message(
-                        message=data.get("message", ""),
+                    gemini_service = get_gemini_service(Settings())
+                    response = await gemini_service.process_message(
                         session_id=session_id,
-                        files=data.get("files", [])
+                        message=data.get("message", ""),
+                        attachments=data.get("files", [])
                     )
                     
                     # Send response back to client
                     await manager.send_message(session_id, {
                         "type": "chat_response",
-                        "response": response
+                        "response": response.dict()
                     })
                     
                 except Exception as e:
@@ -192,10 +181,10 @@ async def root():
 
 def main():
     """Main entry point for running the server."""
-    settings = get_settings()
+    settings = Settings()
     
     uvicorn.run(
-        "main:app",
+        "app.main:app",
         host=settings.HOST,
         port=settings.PORT,
         reload=settings.DEBUG,

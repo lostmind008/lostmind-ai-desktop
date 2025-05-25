@@ -36,6 +36,10 @@ class Settings(BaseSettings):
     
     # Caching Configuration
     REDIS_URL: Optional[str] = None
+    REDIS_HOST: str = "localhost"
+    REDIS_PORT: int = 6379
+    REDIS_DB: int = 0
+    REDIS_PASSWORD: Optional[str] = None
     CACHE_TTL_SHORT: int = 3600  # 1 hour
     CACHE_TTL_MEDIUM: int = 86400  # 24 hours
     CACHE_TTL_LONG: int = 604800  # 7 days
@@ -57,7 +61,7 @@ class Settings(BaseSettings):
     MAX_CONTEXT_ITEMS: int = 5
     
     # AI Model Configuration
-    DEFAULT_MODEL: str = "gemini-2.5-pro-preview"
+    DEFAULT_MODEL: str = "gemini-2.0-flash"  # Updated to latest stable model
     DEFAULT_TEMPERATURE: float = 0.7
     DEFAULT_MAX_TOKENS: int = 8192
     
@@ -95,6 +99,13 @@ class Settings(BaseSettings):
         os.makedirs(v, exist_ok=True)
         return v
     
+    @validator("VECTOR_DB_PATH")
+    def validate_vector_db_path(cls, v):
+        """Ensure vector database directory exists."""
+        if v:
+            os.makedirs(os.path.dirname(v) if os.path.dirname(v) else "./data", exist_ok=True)
+        return v
+    
     @property
     def is_development(self) -> bool:
         """Check if running in development mode."""
@@ -108,7 +119,58 @@ class Settings(BaseSettings):
     @property
     def use_redis_cache(self) -> bool:
         """Check if Redis caching is available."""
-        return self.REDIS_URL is not None
+        return self.REDIS_URL is not None or (self.REDIS_HOST and self.REDIS_PORT)
+    
+    @property
+    def redis_host(self) -> str:
+        """Get Redis host from URL or direct config."""
+        if self.REDIS_URL:
+            # Parse Redis URL (redis://host:port/db)
+            return self.REDIS_URL.split("//")[1].split(":")[0]
+        return self.REDIS_HOST
+    
+    @property
+    def redis_port(self) -> int:
+        """Get Redis port from URL or direct config."""
+        if self.REDIS_URL:
+            # Parse Redis URL
+            parts = self.REDIS_URL.split("//")[1].split(":")
+            if len(parts) > 1:
+                return int(parts[1].split("/")[0])
+        return self.REDIS_PORT
+    
+    @property
+    def redis_db(self) -> int:
+        """Get Redis database from URL or direct config."""
+        if self.REDIS_URL:
+            # Parse Redis URL
+            if "/" in self.REDIS_URL:
+                return int(self.REDIS_URL.split("/")[-1])
+        return self.REDIS_DB
+    
+    @property
+    def redis_password(self) -> Optional[str]:
+        """Get Redis password from URL or direct config."""
+        if self.REDIS_URL and "@" in self.REDIS_URL:
+            # Parse Redis URL with password (redis://:password@host:port/db)
+            return self.REDIS_URL.split("//")[1].split("@")[0].split(":")[-1]
+        return self.REDIS_PASSWORD
+    
+    @property
+    def vector_db_path(self) -> str:
+        """Get vector database path."""
+        return self.VECTOR_DB_PATH
+    
+    @property
+    def embedding_model(self) -> str:
+        """Get embedding model name."""
+        # Map Gemini embedding model to sentence-transformers model
+        if self.EMBEDDING_MODEL == "text-embedding-004":
+            return "all-MiniLM-L6-v2"  # Fast, good quality
+        elif self.EMBEDDING_MODEL == "text-embedding-preview":
+            return "all-mpnet-base-v2"  # Higher quality
+        else:
+            return "all-MiniLM-L6-v2"  # Default fallback
     
     @property
     def gemini_config(self) -> dict:

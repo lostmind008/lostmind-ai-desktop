@@ -14,7 +14,10 @@ from app.models.chat import (
     ChatResponse, ModelSelection, UsageStats
 )
 from app.services.gemini_service import GeminiService
-from app.core.dependencies import get_gemini_service
+from app.services.cache_service import CacheService
+from app.services.vector_service import VectorService
+from app.core.dependencies import get_gemini_service, get_cache_service, get_vector_service
+from app.models.knowledge import RAGRequest, RAGResponse
 
 router = APIRouter(prefix="/chat", tags=["chat"])
 
@@ -269,3 +272,106 @@ async def regenerate_last_response(
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error regenerating response: {str(e)}")
+
+
+# RAG-Enhanced Chat Endpoints
+
+@router.post("/sessions/{session_id}/rag", response_model=ChatResponse)
+async def send_rag_message(
+    session_id: str,
+    rag_request: RAGRequest,
+    gemini_service: GeminiService = Depends(get_gemini_service),
+    cache_service: CacheService = Depends(get_cache_service),
+    vector_service: VectorService = Depends(get_vector_service)
+) -> ChatResponse:
+    """Send a message with RAG-enhanced context from the knowledge base."""
+    try:
+        response = await gemini_service.process_rag_message(
+            session_id=session_id,
+            rag_request=rag_request,
+            cache_service=cache_service,
+            vector_service=vector_service
+        )
+        
+        # Cache the session and message
+        if cache_service:
+            session = await gemini_service.get_session(session_id)
+            if session:
+                await cache_service.cache_session(session)
+                if session.messages:
+                    await cache_service.cache_message(session_id, session.messages[-1])
+        
+        return response
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing RAG message: {str(e)}")
+
+
+@router.post("/sessions/{session_id}/messages/cached", response_model=ChatResponse)
+async def send_cached_message(
+    session_id: str,
+    message_data: ChatMessageCreate,
+    gemini_service: GeminiService = Depends(get_gemini_service),
+    cache_service: CacheService = Depends(get_cache_service)
+) -> ChatResponse:
+    """Send a message with intelligent caching for improved performance."""
+    try:
+        response = await gemini_service.process_message_with_cache(
+            session_id=session_id,
+            message=message_data.content,
+            attachments=message_data.files,
+            cache_service=cache_service,
+            use_thinking=message_data.use_thinking,
+            enable_search=message_data.enable_search
+        )
+        
+        # Cache the session and message
+        if cache_service:
+            session = await gemini_service.get_session(session_id)
+            if session:
+                await cache_service.cache_session(session)
+                if session.messages:
+                    await cache_service.cache_message(session_id, session.messages[-1])
+        
+        return response
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing cached message: {str(e)}")
+
+
+@router.get("/sessions/{session_id}/cache")
+async def get_cached_session_data(
+    session_id: str,
+    cache_service: CacheService = Depends(get_cache_service)
+):
+    """Get cached session data and messages."""
+    try:
+        session_data = await cache_service.get_session(session_id)
+        messages = await cache_service.get_messages(session_id)
+        
+        return {
+            "session": session_data,
+            "messages": messages,
+            "cache_status": "hit" if session_data else "miss"
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting cached data: {str(e)}")
+
+
+@router.delete("/sessions/{session_id}/cache")
+async def clear_session_cache(
+    session_id: str,
+    cache_service: CacheService = Depends(get_cache_service)
+):
+    """Clear cached data for a specific session."""
+    try:
+        success = await cache_service.delete_session(session_id)
+        
+        return {
+            "message": f"Cache cleared for session {session_id}",
+            "success": success
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error clearing cache: {str(e)}")
