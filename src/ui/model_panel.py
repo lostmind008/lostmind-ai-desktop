@@ -170,8 +170,8 @@ class ModelPanel(QScrollArea):
             self.base_model_value.setText("N/A")
             self.description_label.setText("No information available for this model.")
             
-            # Hide base model row if not applicable
-            self.base_model_label.parent().layout().setVisible(False)
+            # Hide base model container if not applicable
+            self.base_model_container.setVisible(False)
             
             # Clear capabilities
             self.capabilities_table.setRowCount(0)

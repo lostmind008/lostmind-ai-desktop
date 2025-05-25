@@ -308,6 +308,8 @@ class ControlsPanel(QWidget):
         Returns:
             bool: True if search is supported, False otherwise.
         """
+        if not self.assistant.selected_model:
+            return False
         return "gemini-2" in self.assistant.selected_model and \
             self.assistant.model_registry.model_supports_feature(
                 self.assistant.selected_model, "googleSearch"
@@ -320,6 +322,8 @@ class ControlsPanel(QWidget):
         Returns:
             bool: True if thinking mode is supported, False otherwise.
         """
+        if not self.assistant.selected_model:
+            return False
         return self.assistant.model_registry.model_supports_feature(
             self.assistant.selected_model, "thinkingMode"
         )

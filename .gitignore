@@ -1,1 +1,16 @@
 .DS_Store
+# Dependencies and build artifacts
+venv_test_py311/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.coverage
+.pytest_cache/
+node_modules/
+.next/
+dist/
+build/
+*.egg-info/

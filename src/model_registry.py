@@ -73,8 +73,7 @@ class ModelRegistry:
             self.client = genai.Client(
                 vertexai=True,
                 project=project_id,
-                location=location,
-                http_options={'api_version': 'v1'}
+                location=location
             )
             
             self.logger.info(f"GenAI client initialized with project={project_id}, location={location}")

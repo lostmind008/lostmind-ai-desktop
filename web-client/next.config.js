@@ -2,9 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: {
-    appDir: true,
-  },
+  // App Router is enabled by default in Next.js 14
+  // experimental: { appDir: true } is no longer needed
   
   // API configuration for backend communication
   async rewrites() {
