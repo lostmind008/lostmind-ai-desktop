@@ -4,7 +4,7 @@ Routes for managing chat sessions and processing messages.
 """
 
 from typing import List, Optional
-from fastapi import APIRouter, HTTPException, Depends, UploadFile, File
+from fastapi import APIRouter, HTTPException, Depends, UploadFile, File, Request
 from fastapi.responses import StreamingResponse
 import json
 import io
@@ -15,6 +15,7 @@ from app.models.chat import (
 )
 from app.services.gemini_service import GeminiService
 from app.core.dependencies import get_gemini_service
+from app.core.rate_limit import limiter, RateLimits
 
 router = APIRouter(prefix="/chat", tags=["chat"])
 
@@ -71,7 +72,9 @@ async def delete_session(
 
 
 @router.post("/sessions/{session_id}/messages", response_model=ChatResponse)
+@limiter.limit(RateLimits.CHAT)
 async def send_message(
+    request: Request,
     session_id: str,
     message_data: ChatRequest,
     gemini_service: GeminiService = Depends(get_gemini_service)
@@ -93,7 +96,9 @@ async def send_message(
 
 
 @router.post("/sessions/{session_id}/messages/stream")
+@limiter.limit(RateLimits.CHAT_STREAM)
 async def send_message_stream(
+    request: Request,
     session_id: str,
     message_data: ChatRequest,
     gemini_service: GeminiService = Depends(get_gemini_service)
@@ -144,7 +149,9 @@ async def get_messages(
 
 
 @router.post("/sessions/{session_id}/files")
+@limiter.limit(RateLimits.FILE_UPLOAD)
 async def upload_file(
+    request: Request,
     session_id: str,
     file: UploadFile = File(...),
     gemini_service: GeminiService = Depends(get_gemini_service)

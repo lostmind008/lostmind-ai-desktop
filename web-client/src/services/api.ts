@@ -29,6 +29,7 @@ import {
   APIResponse,
   PaginatedResponse,
 } from '@/types/api';
+import { createRetryInterceptor, rateLimitTracker } from '@/utils/retry';
 
 class APIService {
   private client: AxiosInstance;
@@ -72,6 +73,12 @@ class APIService {
       (response: AxiosResponse) => {
         const duration = Date.now() - (response.config.metadata?.startTime || 0);
         console.log(`[API] ${response.config.method?.toUpperCase()} ${response.config.url} - ${response.status} (${duration}ms)`);
+        
+        // Update rate limit tracking
+        if (response.config.url) {
+          rateLimitTracker.updateFromResponse(response.config.url, response);
+        }
+        
         return response;
       },
       (error: AxiosError) => {
@@ -88,6 +95,18 @@ class APIService {
         
         return Promise.reject(apiError);
       }
+    );
+    
+    // Add retry interceptor
+    const retryInterceptor = createRetryInterceptor({
+      maxAttempts: 3,
+      onRetry: (error, attempt) => {
+        console.log(`[API Retry] Attempt ${attempt} for ${error.config?.url} after ${error.response?.status || 'network error'}`);
+      },
+    });
+    this.client.interceptors.response.use(
+      retryInterceptor.fulfilled,
+      retryInterceptor.rejected
     );
   }
 

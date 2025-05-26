@@ -18,6 +18,8 @@ import websockets
 from PyQt6.QtCore import QObject, pyqtSignal, QThread
 from PyQt6.QtWidgets import QApplication
 
+from src.utils.retry_handler import RetryableSession, RetryConfig, rate_limit_tracker
+
 logger = logging.getLogger(__name__)
 
 class ApiClientError(Exception):
@@ -120,11 +122,20 @@ class ApiClient:
         self.base_url = base_url.rstrip("/")
         self.api_base = f"{self.base_url}/api/v1"
         self.session = None
+        self.retryable_session = None
         self.websocket_manager = WebSocketManager(base_url)
+        self.retry_config = RetryConfig(
+            max_attempts=3,
+            initial_delay=1.0,
+            max_delay=30.0,
+            exponential_base=2.0,
+            jitter=True
+        )
         
     async def __aenter__(self):
         """Async context manager entry."""
         self.session = aiohttp.ClientSession()
+        self.retryable_session = RetryableSession(self.session, self.retry_config)
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -141,9 +152,10 @@ class ApiClient:
         files: Dict = None,
         params: Dict = None
     ) -> Dict[str, Any]:
-        """Make HTTP request to backend API."""
+        """Make HTTP request to backend API with retry logic."""
         if not self.session:
             self.session = aiohttp.ClientSession()
+            self.retryable_session = RetryableSession(self.session, self.retry_config)
         
         url = f"{self.api_base}{endpoint}"
         
@@ -165,17 +177,22 @@ class ApiClient:
             elif json_data:
                 kwargs["json"] = json_data
             
-            async with self.session.request(method, url, **kwargs) as response:
-                if response.content_type == 'application/json':
-                    result = await response.json()
-                else:
-                    result = {"content": await response.text()}
-                
-                if response.status >= 400:
-                    error_msg = result.get("detail", f"HTTP {response.status}")
-                    raise ApiClientError(f"API request failed: {error_msg}")
-                
-                return result
+            # Use retryable session for automatic retry logic
+            response = await self.retryable_session.request(method, url, **kwargs)
+            
+            if response.content_type == 'application/json':
+                result = await response.json()
+            else:
+                result = {"content": await response.text()}
+            
+            if response.status >= 400:
+                error_msg = result.get("detail", f"HTTP {response.status}")
+                # Log rate limit info if available
+                if response.status == 429:
+                    logger.warning(f"Rate limit hit for {endpoint}. Headers: {dict(response.headers)}")
+                raise ApiClientError(f"API request failed: {error_msg}")
+            
+            return result
                 
         except aiohttp.ClientError as e:
             logger.error(f"HTTP request failed: {e}")

@@ -16,6 +16,65 @@
 
 ## Issues Found & Fixed
 
+### Issue #16: API Rate Limiting & Retry Mechanisms ✅ IMPLEMENTED  
+**Timestamp**: 2025-01-26 17:30:00  
+**Priority**: MEDIUM  
+**Task**: T32 - Implement API rate limiting and retry mechanisms  
+**Files**: Multiple backend and client files  
+
+**Problem**: The platform lacked rate limiting on the backend and retry mechanisms in clients, making it vulnerable to abuse and poor handling of transient failures.
+
+**Implementation**:
+
+**Backend Rate Limiting:**
+1. Added slowapi integration for FastAPI
+2. Created comprehensive rate limiting module (`backend/app/core/rate_limit.py`)
+3. Configured endpoint-specific limits:
+   - Chat endpoints: 10/min (stream: 5/min)
+   - RAG queries: 20/min
+   - File uploads: 30/hour
+   - Knowledge operations: 50-100/hour
+4. Added rate limit headers to all responses
+5. Custom rate limit exceeded handler with detailed error info
+6. Redis-backed rate limiting for distributed deployments
+
+**Client Retry Logic:**
+1. **Web Client** (`web-client/src/utils/retry.ts`):
+   - Exponential backoff with jitter
+   - Automatic retry on 429 and 5xx errors
+   - Respects Retry-After headers
+   - Rate limit tracking and client-side throttling
+   - Axios interceptor for transparent retries
+
+2. **Desktop Client** (`src/utils/retry_handler.py`):
+   - AsyncIO-compatible retry wrapper
+   - Rate limit tracking per endpoint
+   - Configurable retry behavior
+   - RetryableSession wrapper for aiohttp
+   - Automatic backoff calculations
+
+**Key Features:**
+- Production-ready rate limiting with configurable limits
+- Smart retry logic that respects server guidance
+- Client-side rate limit awareness
+- Exponential backoff prevents thundering herd
+- Jitter prevents synchronized retries
+- Comprehensive logging for debugging
+
+**Testing Notes:**
+- Rate limits can be configured via environment variables
+- Development mode has more permissive limits
+- Clients handle rate limits gracefully with retries
+- No user action required for transient failures
+
+**Dependencies Added:**
+- `slowapi>=0.1.9` (backend)
+- `aiosqlite>=0.19.0` (backend - missing dependency)
+
+**Status**: ✅ COMPLETED - Platform now has robust rate limiting and retry mechanisms
+
+---
+
 ### Issue #15: WebSocket Implementation Standardized ✅ FIXED  
 **Timestamp**: 2025-01-26 16:45:00  
 **Priority**: MEDIUM  

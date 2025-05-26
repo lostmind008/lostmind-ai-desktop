@@ -14,12 +14,15 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import uvicorn
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
 
 from app.core.config import Settings
 from app.api import health, chat, knowledge
 from app.api.endpoints import rag, chat_rag
 from app.core.dependencies import initialize_services, cleanup_services, get_gemini_service
 from app.services.gemini_service import GeminiService
+from app.core.rate_limit import limiter, custom_rate_limit_handler, add_rate_limit_headers
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -57,6 +60,12 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+# Add rate limiter to app state
+app.state.limiter = limiter
+
+# Add rate limit exceeded handler
+app.add_exception_handler(RateLimitExceeded, custom_rate_limit_handler)
+
 # CORS middleware for web client
 app.add_middleware(
     CORSMiddleware,
@@ -65,6 +74,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Add rate limit headers middleware
+@app.middleware("http")
+async def rate_limit_headers_middleware(request, call_next):
+    return await add_rate_limit_headers(request, call_next)
 
 # Include API routers
 app.include_router(health.router, prefix="/api/v1")
